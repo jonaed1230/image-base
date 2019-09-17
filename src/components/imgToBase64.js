@@ -5,6 +5,7 @@ import data from "./data.json";
 class imgToBase64 extends Component {
   componentDidMount() {
     (() => {
+      // provided image data
       const imageName = data.data.imageName;
       const baseImage = data.data.image;
       const previewImage = document.querySelector(".img-preview");
@@ -19,9 +20,10 @@ class imgToBase64 extends Component {
       let zeroth = {};
       let exif = {};
       let gps = {};
-
+      // gps coordinates
       const lat = locationLat;
       const lng = locationLng;
+      // exif datas
       zeroth[exifData.ImageIFD.Make] = cameraName;
       zeroth[exifData.ImageIFD.Model] = cameraModel;
       zeroth[exifData.ImageIFD.ImageDescription] = imageDetails;
@@ -34,7 +36,7 @@ class imgToBase64 extends Component {
       gps[exifData.GPSIFD.GPSLongitude] = exifData.GPSHelper.degToDmsRational(
         lng
       );
-
+      // add exif data to image
       let exifObj = { "0th": zeroth, Exif: exif, GPS: gps };
       let exifbytes = exifData.dump(exifObj);
       let newData = exifData.insert(exifbytes, baseImage);
